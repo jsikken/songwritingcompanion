@@ -143,8 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const content = notepad.value;
         const blob = new Blob([content], { type: 'text/plain' });
         const link = document.createElement('a');
+        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         link.href = URL.createObjectURL(blob);
-        link.download = 'notes.txt';
+        link.download = `notes-${date}.txt`;
         link.click();
         URL.revokeObjectURL(link.href);
     }
