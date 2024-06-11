@@ -141,11 +141,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function saveFile() {
         const content = notepad.value;
+        const title = document.getElementById('titleBox').value.trim();
+        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
         const blob = new Blob([content], { type: 'text/plain' });
         const link = document.createElement('a');
-        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         link.href = URL.createObjectURL(blob);
-        link.download = `notes-${date}.txt`;
+        link.download = fileName;
         link.click();
         URL.revokeObjectURL(link.href);
     }
