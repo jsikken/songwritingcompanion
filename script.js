@@ -132,7 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    notepad.value = e.target.result;
+                    const fileContent = e.target.result;
+                    const titleMarker = '---TITLE---';
+                    const contentMarker = '---CONTENT---';
+                    const titleStart = fileContent.indexOf(titleMarker) + titleMarker.length;
+                    const contentStart = fileContent.indexOf(contentMarker) + contentMarker.length;
+                    const title = fileContent.substring(titleStart, fileContent.indexOf(contentMarker)).trim();
+                    const content = fileContent.substring(contentStart).trim();
+                    document.getElementById('titleBox').value = title;
+                    notepad.value = content;
                 };
                 reader.readAsText(file);
             }
@@ -144,7 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('titleBox').value.trim();
         const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
-        const blob = new Blob([content], { type: 'text/plain' });
+        const fileContent = `---TITLE---\n${title}\n---LYRICS/NOTES---\n${content}`;
+        const blob = new Blob([fileContent], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = fileName;
