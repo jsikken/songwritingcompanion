@@ -76,6 +76,20 @@
             display: inline-block;
             text-align: left; /* Reset text alignment inside content */
         }
+        .rhyme-container {
+            margin-top: 20px;
+        }
+        .rhyme-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .rhyme-word {
+            background-color: #fff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -100,9 +114,15 @@
         <div class="trackbar-container">
             <input type="range" id="trackbar" min="0" max="11" value="0">
         </div>
+        <div class="rhyme-container">
+            <label for="rhymeBox">Rhyme words</label>
+            <input type="text" id="rhymeBox" placeholder="Enter a word">
+            <div id="rhymeResults" class="rhyme-words"></div>
+        </div>
     </div>
     <footer>
         <p>Songwriting Companion © JSikken, 2024</p>
+        <p>Rhyme database © Datamuse, 2024</p>
     </footer>
     <script src="script.js"></script>
 </body>
