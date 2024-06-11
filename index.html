@@ -147,6 +147,11 @@
         .notepad-container button {
             margin: 5px;
         }
+        #titleBox {
+            background-color: #FFFD90;
+            width: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -184,9 +189,8 @@
         </div>
     </div>
     <div class="notepad-container">
-        <label for="titleBox">Title</label>
-        <input type="text" id="titleBox" placeholder="Enter song title"><br>
-        <label for="notepad">Songwriting Notepad</label>
+        <label for="titleBox">Songwriting Notepad</label>
+        <input type="text" id="titleBox" placeholder="Enter song title">
         <textarea id="notepad" placeholder="Write your lyrics or notes here..."></textarea>
         <input type="file" id="fileInput" style="display: none;">
         <button onclick="importFile()">Import .txt</button>
