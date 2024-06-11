@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const majorKeys = ["C maj", "G maj", "D maj", "A maj", "E maj", "B maj", "F# maj", "C# maj", "Ab maj", "Eb maj", "Bb maj", "F maj"];
     const minorKeys = ["A min", "E min", "B min", "F# min", "C# min", "G# min", "D# min", "A# min", "F min", "C min", "G min", "D min"];
@@ -152,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('titleBox').value.trim();
         const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
-        const fileContent = `---TITLE---\n${title}\n---LYRICS/NOTES---\n${content}`;
+        const fileContent = `---TITLE---\n${title}\n---CONTENT---\n${content}`;
         const blob = new Blob([fileContent], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
