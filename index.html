@@ -68,21 +68,32 @@
         }
         body {
             background-color: #d8d8d8;
-            text-align: center; /* Center content inside body */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
             padding-top: 60px; /* Space for the fixed header */
             padding-bottom: 60px; /* Space for the fixed footer */
         }
         .content {
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: left; /* Reset text alignment inside content */
         }
         .rhyme-container {
             margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .rhyme-words {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            justify-content: center;
         }
         .rhyme-word {
             background-color: #fff;
@@ -121,7 +132,7 @@
         </div>
     </div>
     <footer>
-        <p>Songwriting Companion © JSikken, 2024</p>
+        <p>Songwriting Companion © Joppe Sikken, 2024</p>
         <p>Rhyme database © Datamuse, 2024</p>
     </footer>
     <script src="script.js"></script>
