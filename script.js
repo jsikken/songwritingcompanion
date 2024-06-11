@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const trackbar = document.getElementById('trackbar');
     const rhymeBox = document.getElementById('rhymeBox');
     const rhymeResults = document.getElementById('rhymeResults');
+    const notepad = document.getElementById('notepad');
+    const fileInput = document.getElementById('fileInput');
 
     function createPianoRoll(container, notes) {
         container.innerHTML = '';
@@ -122,4 +124,31 @@ document.addEventListener('DOMContentLoaded', function() {
     rhymeBox.addEventListener('input', function() {
         fetchRhymes(rhymeBox.value);
     });
+
+    function importFile() {
+        fileInput.click();
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    notepad.value = e.target.result;
+                };
+                reader.readAsText(file);
+            }
+        });
+    }
+
+    function saveFile() {
+        const content = notepad.value;
+        const blob = new Blob([content], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'notes.txt';
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    window.importFile = importFile;
+    window.saveFile = saveFile;
 });
