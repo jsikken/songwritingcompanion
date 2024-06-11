@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = '';
         const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
         const blackKeyOffsets = [1, 3, 6, 8, 10]; // Positions of black keys in an octave
-        for (let i = 0; i < 52; i++) {
-            const noteName = noteNames[i % 12] + Math.floor(i / 12 + 1);
+        for (let i = 0; i < 25; i++) { // Limit to 25 keys (C1 to C3)
+            let noteName = noteNames[i % 12] + Math.floor(i / 12 + 1);
             const key = document.createElement('div');
             key.classList.add('piano-key');
             if (blackKeyOffsets.includes(i % 12)) {
@@ -55,7 +55,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const label = document.createElement('div');
             label.classList.add('note-label');
-            label.textContent = noteName;
+            if (noteName === "B#1" || noteName === "B#2") {
+                label.textContent = "B#";
+                noteName = noteName.replace("B#", "C");
+            } else if (noteName === "E#1" || noteName === "E#2") {
+                label.textContent = "E#";
+                noteName = noteName.replace("E#", "F");
+            } else {
+                label.textContent = noteName;
+            }
             if (key.classList.contains('black-key') && key.classList.contains('highlighted')) {
                 label.style.color = 'white';
             }
