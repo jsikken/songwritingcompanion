@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const pianoRollMajors = document.getElementById('pianoRollMajors');
     const pianoRollMinors = document.getElementById('pianoRollMinors');
     const trackbar = document.getElementById('trackbar');
+    const rhymeBox = document.getElementById('rhymeBox');
+    const rhymeResults = document.getElementById('rhymeResults');
 
     function createPianoRoll(container, notes) {
         container.innerHTML = '';
@@ -97,4 +99,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialiseer de piano rolls met de eerste toonsoort
     updateTextBoxes(0);
+
+    // Functie om rijmwoorden op te halen en weer te geven
+    function fetchRhymes(word) {
+        if (word.trim() === '') {
+            rhymeResults.innerHTML = '';
+            return;
+        }
+        fetch(`https://api.datamuse.com/words?rel_rhy=${word}`)
+            .then(response => response.json())
+            .then(data => {
+                rhymeResults.innerHTML = '';
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.classList.add('rhyme-word');
+                    div.textContent = item.word;
+                    rhymeResults.appendChild(div);
+                });
+            });
+    }
+
+    rhymeBox.addEventListener('input', function() {
+        fetchRhymes(rhymeBox.value);
+    });
 });
