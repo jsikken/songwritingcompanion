@@ -67,13 +67,12 @@
             margin: 0;
         }
         body {
-            background-color: #d8d8d8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            background-color: #ffffff;
+            opacity: 1;
+            background-image:  linear-gradient(135deg, #f7f7f7 25%, transparent 25%), linear-gradient(225deg, #f7f7f7 25%, transparent 25%), linear-gradient(45deg, #f7f7f7 25%, transparent 25%), linear-gradient(315deg, #f7f7f7 25%, #ffffff 25%);
+            background-position:  10px 0, 10px 0, 0 0, 0 0;
+            background-size: 20px 20px;
+            background-repeat: repeat;
             padding-top: 60px; /* Space for the fixed header */
             padding-bottom: 60px; /* Space for the fixed footer */
         }
@@ -107,6 +106,8 @@
     <header>
         <h1>Sikken's Songwriting Companion</h1>
     </header>
+    <br>
+    <br>
     <div class="content">
         <div>
             <label for="majorBox">Majors</label>
