@@ -61,6 +61,15 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (noteName === "E#1" || noteName === "E#2") {
                 label.textContent = "E#";
                 noteName = noteName.replace("E#", "F");
+            } else if (noteName === "A#1" || noteName === "A#2") {
+                label.textContent = "A#";
+                noteName = noteName.replace("A#", "Bb");
+            } else if (noteName === "D#1" || noteName === "D#2") {
+                label.textContent = "D#";
+                noteName = noteName.replace("D#", "Eb");
+            } else if (noteName === "G#1" || noteName === "G#2") {
+                label.textContent = "G#";
+                noteName = noteName.replace("G#", "Ab");
             } else {
                 label.textContent = noteName;
             }
