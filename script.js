@@ -1,7 +1,8 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     const majorKeys = ["C maj", "G maj", "D maj", "A maj", "E maj", "B maj", "F# maj", "C# maj", "Ab maj", "Eb maj", "Bb maj", "F maj"];
     const minorKeys = ["A min", "E min", "B min", "F# min", "C# min", "G# min", "D# min", "A# min", "F min", "C min", "G min", "D min"];
+    const phrygianKeys = ["C Phrygian", "G Phrygian", "D Phrygian", "A Phrygian", "E Phrygian", "B Phrygian", "F# Phrygian", "C# Phrygian", "Ab Phrygian", "Eb Phrygian", "Bb Phrygian", "F Phrygian"];
+
     const majorNotes = {
         "C maj": ["C1", "D1", "E1", "F1", "G1", "A1", "B1", "C2"],
         "G maj": ["G1", "A1", "B1", "C2", "D2", "E2", "F#2", "G2"],
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "Bb maj": ["A#1", "C2", "D2", "D#2", "F2", "G2", "A2", "A#2"],
         "F maj": ["F1", "G1", "A1", "A#1", "C2", "D2", "E2", "F2"]
     };
+
     const minorNotes = {
         "A min": ["A1", "B1", "C2", "D2", "E2", "F2", "G2", "A2"],
         "E min": ["E1", "F#1", "G1", "A1", "B1", "C2", "D2", "E2"],
@@ -31,31 +33,64 @@ document.addEventListener('DOMContentLoaded', function() {
         "D min": ["D1", "E1", "F1", "G1", "A1", "A#1", "C2", "D2"]
     };
 
+    const phrygianNotes = {
+        "C Phrygian": ["C1", "Db1", "Eb1", "F1", "G1", "Ab1", "Bb1", "C2"],
+        "G Phrygian": ["G1", "Ab1", "Bb1", "C2", "D2", "Eb2", "F2", "G2"],
+        "D Phrygian": ["D1", "Eb1", "F1", "G1", "A1", "Bb1", "C2", "D2"],
+        "A Phrygian": ["A1", "Bb1", "C2", "D2", "E2", "F2", "G2", "A2"],
+        "E Phrygian": ["E1", "F1", "G1", "A1", "B1", "C2", "D2", "E2"],
+        "B Phrygian": ["B1", "C1", "D2", "E2", "F#2", "G2", "A2", "B2"],
+        "F# Phrygian": ["F#1", "G1", "A1", "B1", "C#2", "D2", "E2", "F#2"],
+        "C# Phrygian": ["C#1", "D1", "E1", "F#1", "G#1", "A1", "B1", "C#2"],
+        "Ab Phrygian": ["Ab1", "A1", "C2", "Db2", "Eb2", "F2", "Gb2", "Ab2"],
+        "Eb Phrygian": ["Eb1", "E1", "G1", "Ab1", "Bb1", "C2", "Db2", "Eb2"],
+        "Bb Phrygian": ["Bb1", "B1", "D2", "Eb2", "F2", "G2", "Ab2", "Bb2"],
+        "F Phrygian": ["F1", "Gb1", "A1", "Bb1", "C2", "D2", "Eb2", "F2"]
+    };
+
     const majorBox = document.getElementById('majorBox');
     const minorBox = document.getElementById('minorBox');
+    const majorLabel = document.querySelector('label[for="majorBox"]');
+    const minorLabel = document.querySelector('label[for="minorBox"]');
     const pianoRollMajors = document.getElementById('pianoRollMajors');
     const pianoRollMinors = document.getElementById('pianoRollMinors');
     const trackbar = document.getElementById('trackbar');
     const rhymeBox = document.getElementById('rhymeBox');
     const rhymeResults = document.getElementById('rhymeResults');
-    const notepad = document.getElementById('notepad');
     const fileInput = document.getElementById('fileInput');
+    const thesaurusBox = document.getElementById('thesaurusBox');
+    const thesaurusResults = document.getElementById('thesaurusResults');
+    const scaleType = document.getElementById('scaleType');
+
+    // Offsets for black keys
+    const blackKeyOffsets = {
+        "C#1": -10,
+        "D#1": -10,
+        "F#1": -8,
+        "G#1": -8,
+        "A#1": -8,
+        "C#2": -20,
+        "D#2": -20,
+        "F#2": -16,
+        "G#2": -16,
+        "A#2": -16
+    };
 
     function createPianoRoll(container, notes) {
         container.innerHTML = '';
         const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
         const whiteKeyOffsets = [0, 2, 4, 5, 7, 9, 11]; // Positions of white keys in an octave
-        const blackKeyOffsets = [1, 3, 6, 8, 10]; // Positions of black keys in an octave
         let whiteKeyIndex = 0;
         for (let i = 0; i < 25; i++) { // Limit to 25 keys (C1 to C3)
             let noteName = noteNames[i % 12] + Math.floor(i / 12 + 1);
             const key = document.createElement('div');
             key.classList.add('piano-key');
-            if (blackKeyOffsets.includes(i % 12)) {
+            if (noteName.includes('#')) {
                 key.classList.add('black-key');
-                key.style.left = `${whiteKeyIndex * 20 - 6}px`;
+                key.style.left = `${whiteKeyIndex * 20 + (blackKeyOffsets[noteName] || 0)}px`;
             } else {
                 key.classList.add('white-key');
+                key.style.left = `${whiteKeyIndex * 20}px`;
                 whiteKeyIndex++;
             }
             if (notes.includes(noteName)) {
@@ -63,24 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const label = document.createElement('div');
             label.classList.add('note-label');
-            if (noteName === "B#1" || noteName === "B#2") {
-                label.textContent = "B#";
-                noteName = noteName.replace("B#", "C");
-            } else if (noteName === "E#1" || noteName === "E#2") {
-                label.textContent = "E#";
-                noteName = noteName.replace("E#", "F");
-            } else if (noteName === "A#1" || noteName === "A#2") {
-                label.textContent = "A#";
-                noteName = noteName.replace("A#", "Bb");
-            } else if (noteName === "D#1" || noteName === "D#2") {
-                label.textContent = "D#";
-                noteName = noteName.replace("D#", "Eb");
-            } else if (noteName === "G#1" || noteName === "G#2") {
-                label.textContent = "G#";
-                noteName = noteName.replace("G#", "Ab");
-            } else {
-                label.textContent = noteName;
-            }
+            label.textContent = noteName;
             if (key.classList.contains('black-key') && key.classList.contains('highlighted')) {
                 label.style.color = 'white';
             }
@@ -90,11 +108,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateTextBoxes(index) {
-        majorBox.value = majorKeys[index];
-        minorBox.value = minorKeys[index];
-        createPianoRoll(pianoRollMajors, majorNotes[majorKeys[index]]);
-        createPianoRoll(pianoRollMinors, minorNotes[minorKeys[index]]);
+        const selectedScaleType = scaleType.value;
+        if (selectedScaleType === 'majorMinor') {
+            majorLabel.style.display = 'block';
+            majorBox.style.display = 'block';
+            minorLabel.textContent = 'Minors';
+            minorBox.value = minorKeys[index];
+            majorBox.value = majorKeys[index];
+            pianoRollMajors.style.display = 'block';
+            createPianoRoll(pianoRollMajors, majorNotes[majorKeys[index]]);
+            createPianoRoll(pianoRollMinors, minorNotes[minorKeys[index]]);
+        } else if (selectedScaleType === 'phrygian') {
+            majorLabel.style.display = 'none';
+            majorBox.style.display = 'none';
+            minorLabel.textContent = 'Phrygian Scale';
+            minorBox.value = phrygianKeys[index];
+            pianoRollMajors.style.display = 'none';
+            createPianoRoll(pianoRollMinors, phrygianNotes[phrygianKeys[index]]);
+        }
     }
+
+    scaleType.addEventListener('change', function() {
+        updateTextBoxes(trackbar.value);
+    });
 
     trackbar.addEventListener('input', function() {
         updateTextBoxes(trackbar.value);
@@ -124,6 +160,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
     rhymeBox.addEventListener('input', function() {
         fetchRhymes(rhymeBox.value);
+    });
+
+    // Functie om synoniemen op te halen en weer te geven
+    function fetchSynonyms(word) {
+        if (word.trim() === '') {
+            thesaurusResults.innerHTML = '';
+            return;
+        }
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+            .then(response => response.json())
+            .then(data => {
+                thesaurusResults.innerHTML = '';
+                if (data.title && data.title === "No Definitions Found") {
+                    thesaurusResults.textContent = "No synonyms found.";
+                    return;
+                }
+                const synonyms = [];
+                data.forEach(entry => {
+                    entry.meanings.forEach(meaning => {
+                        meaning.definitions.forEach(definition => {
+                            if (definition.synonyms) {
+                                synonyms.push(...definition.synonyms);
+                            }
+                        });
+                    });
+                });
+                if (synonyms.length > 0) {
+                    synonyms.forEach(synonym => {
+                        const div = document.createElement('div');
+                        div.classList.add('synonym-word');
+                        div.textContent = synonym;
+                        thesaurusResults.appendChild(div);
+                    });
+                } else {
+                    thesaurusResults.textContent = "No synonyms found.";
+                }
+            });
+    }
+
+    thesaurusBox.addEventListener('input', function() {
+        fetchSynonyms(thesaurusBox.value);
     });
 
     function importFile() {
