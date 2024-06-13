@@ -62,35 +62,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const thesaurusResults = document.getElementById('thesaurusResults');
     const scaleType = document.getElementById('scaleType');
 
-    // Offsets for black keys
-    const blackKeyOffsets = {
-        "C#1": -10,
-        "D#1": -10,
-        "F#1": -8,
-        "G#1": -8,
-        "A#1": -8,
-        "C#2": -20,
-        "D#2": -20,
-        "F#2": -16,
-        "G#2": -16,
-        "A#2": -16
-    };
-
     function createPianoRoll(container, notes) {
         container.innerHTML = '';
         const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
         const whiteKeyOffsets = [0, 2, 4, 5, 7, 9, 11]; // Positions of white keys in an octave
+        const blackKeyOffsets = [1, 3, 6, 8, 10]; // Positions of black keys in an octave
         let whiteKeyIndex = 0;
         for (let i = 0; i < 25; i++) { // Limit to 25 keys (C1 to C3)
             let noteName = noteNames[i % 12] + Math.floor(i / 12 + 1);
             const key = document.createElement('div');
             key.classList.add('piano-key');
-            if (noteName.includes('#')) {
+            if (blackKeyOffsets.includes(i % 12)) {
                 key.classList.add('black-key');
-                key.style.left = `${whiteKeyIndex * 20 + (blackKeyOffsets[noteName] || 0)}px`;
+                key.style.left = `${whiteKeyIndex * 20 - 6}px`;
             } else {
                 key.classList.add('white-key');
-                key.style.left = `${whiteKeyIndex * 20}px`;
                 whiteKeyIndex++;
             }
             if (notes.includes(noteName)) {
