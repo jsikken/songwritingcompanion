@@ -43,7 +43,7 @@
         .piano-roll {
             position: relative;
             height: 100px;
-            
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
         }
         footer {
             background-color: #F7F7F7;
@@ -193,20 +193,7 @@
             <br>
         </div>
     </div>
-       <div class="notepad-container">
-        <div class="button-container">
-            <label for="titleBox">Songwriting Notepad</label>
-            <button onclick="importFile()">Import .txt</button>
-            <button onclick="saveFile()">Save .txt</button>
-        </div>
-        <input type="text" id="titleBox" placeholder="Enter song title">
-        <textarea id="notepad" placeholder="Write your lyrics or notes here..."></textarea>
-        <input type="file" id="fileInput" style="display: none;">
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
+   
     <br>
     <footer>
         <p>Songwriting Companion © Joppe Sikken, 2024</p>
