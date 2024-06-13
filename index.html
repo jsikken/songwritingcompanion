@@ -166,11 +166,14 @@
     </header>
     <br>
     <br>
-    <div class="content">
-        <div>
-            <label for="majorBox">Majors</label>
-            <input type="text" id="majorBox" readonly><br>
-            <br>
+        <div class="content">
+        <br>
+        <label for="scaleType">Select Scale Type:</label>
+        <select id="scaleType" onchange="updateScaleType()">
+            <option value="majorMinor">Major/Minor</option>
+            <option value="phrygian">Phrygian</option>
+        </select>
+        <br>
         </div>
         <div id="pianoRollMajors" class="piano-roll"></div>
         <br>
