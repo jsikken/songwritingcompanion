@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         key.appendChild(label);
         container.appendChild(key);
     }
-}
+
 
     majorBox.addEventListener('change', function() {
         const selectedMajorKey = majorBox.value;
