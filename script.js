@@ -65,33 +65,41 @@ document.addEventListener('DOMContentLoaded', function() {
     function createPianoRoll(container, notes) {
         container.innerHTML = '';
         const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-        const whiteKeyOffsets = [0, 2, 4, 5, 7, 9, 11]; // Positions of white keys in an octave
-        const blackKeyOffsets = [1, 3, 6, 8, 10]; // Positions of black keys in an octave
+        const whiteKeyOffsets = [0, 2, 4, 5, 7, 9, 11]; // Posities van witte toetsen in een octaaf
+        const blackKeyOffsets = [1, 3, 6, 8, 10]; // Posities van zwarte toetsen in een octaaf
         let whiteKeyIndex = 0;
-        for (let i = 0; i < 25; i++) { // Limit to 25 keys (C1 to C3)
+    
+        for (let i = 0; i < 25; i++) { // Beperk tot 25 toetsen (C1 tot C3)
             let noteName = noteNames[i % 12] + Math.floor(i / 12 + 1);
             const key = document.createElement('div');
             key.classList.add('piano-key');
+    
             if (blackKeyOffsets.includes(i % 12)) {
                 key.classList.add('black-key');
-                key.style.left = `${whiteKeyIndex * 20 - 6}px`;
+                key.style.left = `${(whiteKeyIndex - 1) * 20 + 15}px`; // Pas positie aan ten opzichte van de vorige witte toets
             } else {
                 key.classList.add('white-key');
+                key.style.left = `${whiteKeyIndex * 20}px`;
                 whiteKeyIndex++;
             }
+    
             if (notes.includes(noteName)) {
                 key.classList.add('highlighted');
             }
+    
             const label = document.createElement('div');
             label.classList.add('note-label');
             label.textContent = noteName;
+    
             if (key.classList.contains('black-key') && key.classList.contains('highlighted')) {
                 label.style.color = 'white';
             }
+    
             key.appendChild(label);
             container.appendChild(key);
         }
     }
+    
 
     function updateTextBoxes(index) {
         const selectedScaleType = scaleType.value;
