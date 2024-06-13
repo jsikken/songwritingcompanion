@@ -199,6 +199,9 @@
             <option value="majorMinor">Major/Minor</option>
             <option value="phrygian">Phrygian</option>
         </select>
+        <div class="trackbar-container">
+            <input type="range" id="trackbar" min="0" max="11" value="0">
+        </div>
         <br>
         <div>
             <label for="majorBox">Majors</label>
@@ -214,9 +217,7 @@
         </div>
         <div id="pianoRollMinors" class="piano-roll"></div>
         <br>
-        <div class="trackbar-container">
-            <input type="range" id="trackbar" min="0" max="11" value="0">
-        </div>
+        
         <div class="rhyme-container">
             <label for="rhymeBox">Rhyme words (English only)</label>
             <input type="text" id="rhymeBox" placeholder="Enter a word"><br>
