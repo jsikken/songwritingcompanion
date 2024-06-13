@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Songwriting Companion</title>
     <style>
+        .piano-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Pas dit aan naar wens */
+            height: auto; /* Pas dit aan naar wens */
+            margin: 0 auto; /* Zorg ervoor dat de wrapper zelf gecentreerd is */
+        }
+
+        #piano-roll-container {
+            position: relative;
+            height: 100px; /* Pas dit aan naar wens */
+            width: fit-content; /* Zorg ervoor dat de container alleen zo breed is als de inhoud */
+        }
+
         .piano-key {
             display: inline-block;
             width: 20px;
@@ -130,8 +145,6 @@
             height: 835px;
             margin-bottom: 24px;
             outline: none;
-            
-
             padding: 8px;
             font-size: 16px;
             border: 1px solid #ccc;
@@ -143,42 +156,42 @@
             gap: 10px;
         }
         #titleBox {
-        background-color: #FFFD90;
-        width: 100%;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 8px;
-        font-size: 16px;
-        margin-bottom: 0px;
-        outline: none;
-    }
+            background-color: #FFFD90;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 0px;
+            outline: none;
+        }
         .piano-key {
-        position: absolute;
-        width: 20px; /* Breedte van een witte toets */
-        height: 100px;
-        border: 1px solid black;
-        box-sizing: border-box;
-    }
+            position: absolute;
+            width: 20px; /* Breedte van een witte toets */
+            height: 100px;
+            border: 1px solid black;
+            box-sizing: border-box;
+        }
 
-    .white-key {
-        background-color: white;
-    }
+        .white-key {
+            background-color: white;
+        }
 
-    .black-key {
-        width: 14px; /* Breedte van een zwarte toets */
-        height: 60px;
-        background-color: black;
-        z-index: 1;
-    }
+        .black-key {
+            width: 14px; /* Breedte van een zwarte toets */
+            height: 60px;
+            background-color: black;
+            z-index: 1;
+        }
 
-    .highlighted {
-        background-color: lightblue;
-    }
+        .highlighted {
+            background-color: lightblue;
+        }
 
-    .note-label {
-        font-size: 10px;
-        text-align: center;
-    }
+        .note-label {
+            font-size: 10px;
+            text-align: center;
+        }
 
     </style>
 </head>
@@ -188,13 +201,7 @@
         <p>Songwriting Companion © Joppe Sikken, 2024</p>
         <p>Rhyme database © Datamuse, 2024</p>
     </header>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br><br><br><br>
     <div class="content">
         <br>
         <label for="scaleType">Select Scale Type:</label>
@@ -208,30 +215,27 @@
         <br>
         <div>
             <label for="majorBox">Majors</label>
-            <input type="text" id="majorBox" readonly><br>
-            <br>
+            <input type="text" id="majorBox" readonly><br><br>
         </div>
-        <div id="pianoRollMajors" class="piano-roll"></div>
+        <div class="piano-wrapper">
+            <div id="pianoRollMajors" class="piano-roll"></div>
+        </div>
         <br>
         <div>
             <label for="minorBox">Minors</label><br>
-            <input type="text" id="minorBox" readonly><br>
-            <br>
+            <input type="text" id="minorBox" readonly><br><br>
         </div>
-        <div id="pianoRollMinors" class="piano-roll"></div>
+        <div class="piano-wrapper">
+            <div id="pianoRollMinors" class="piano-roll"></div>
+        </div>
         <br>
-        
         <div class="rhyme-container">
             <label for="rhymeBox">Rhyme words (English only)</label>
             <input type="text" id="rhymeBox" placeholder="Enter a word"><br>
-            <div id="rhymeResults" class="rhyme-words"></div>
-            <br>
-            <br>
+            <div id="rhymeResults" class="rhyme-words"></div><br><br>
         </div>
     </div>
-   
     <br>
-
     <script src="script.js"></script>
 </body>
 </html>
