@@ -152,6 +152,34 @@
         margin-bottom: 0px;
         outline: none;
     }
+        .piano-key {
+        position: absolute;
+        width: 20px; /* Breedte van een witte toets */
+        height: 100px;
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
+
+    .white-key {
+        background-color: white;
+    }
+
+    .black-key {
+        width: 14px; /* Breedte van een zwarte toets */
+        height: 60px;
+        background-color: black;
+        z-index: 1;
+    }
+
+    .highlighted {
+        background-color: lightblue;
+    }
+
+    .note-label {
+        font-size: 10px;
+        text-align: center;
+    }
+
     </style>
 </head>
 <body>
