@@ -9,9 +9,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%; /* Ensure it takes the full width of the parent */
-            height: auto; /* Adjust as needed */
-            margin: 0 auto; /* Center the wrapper itself */
+            width: 100%; /* Zorgt ervoor dat de container de volledige breedte van de ouder neemt */
+            margin: 0 auto; /* Centreert de container zelf */
+           
+        }
+
+        #pianoRollMajors, #pianoRollMinors {
+            display: flex;
+            justify-content: center;
+            width: 100%; /* Zorgt ervoor dat de breedte van de pianoroll wordt aangepast aan de inhoud */
+            
         }
 
         #piano-roll-container {
@@ -20,6 +27,7 @@
             width: fit-content; /* Adjust as needed */
             justify-content: center;
             align-items: center;
+            
         }
 
         .piano-key {
@@ -60,7 +68,7 @@
         .piano-roll {
             position: relative;
             height: 100px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+            
         }
         footer {
             background-color: #F7F7F7;
