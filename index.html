@@ -238,6 +238,20 @@
         <div class="piano-wrapper">
             <div id="pianoRollMinors" class="piano-roll"></div>
         </div>
+        <div class="notepad-container">
+        <div class="button-container">
+            <label for="titleBox">Songwriting Notepad</label>
+            <button onclick="importFile()">Import .txt</button>
+            <button onclick="saveFile()">Save .txt</button>
+        </div>
+        <input type="text" id="titleBox" placeholder="Enter song title">
+        <textarea id="notepad" placeholder="Write your lyrics or notes here..."></textarea>
+        <input type="file" id="fileInput" style="display: none;">
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
         <br>
         <div class="rhyme-container">
             <label for="rhymeBox">Rhyme words (English only)</label>
