@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const majorKeys = ["C maj", "G maj", "D maj", "A maj", "E maj", "B maj", "F# maj", "C# maj", "Ab maj", "Eb maj", "Bb maj", "F maj"];
     const minorKeys = ["A min", "E min", "B min", "F# min", "C# min", "G# min", "D# min", "A# min", "F min", "C min", "G min", "D min"];
     const phrygianKeys = ["C Phrygian", "G Phrygian", "D Phrygian", "A Phrygian", "E Phrygian", "B Phrygian", "F# Phrygian", "C# Phrygian", "Ab Phrygian", "Eb Phrygian", "Bb Phrygian", "F Phrygian"];
-    const importButton = document.getElementById('importButton');
-    const saveButton = document.getElementById('saveButton');
-
     const majorNotes = {
         "C maj": ["C1", "D1", "E1", "F1", "G1", "A1", "B1", "C2"],
         "G maj": ["G1", "A1", "B1", "C2", "D2", "E2", "F#2", "G2"],
@@ -63,6 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const thesaurusBox = document.getElementById('thesaurusBox');
     const thesaurusResults = document.getElementById('thesaurusResults');
     const scaleType = document.getElementById('scaleType');
+    const saveButton = document.getElementById('saveButton');
+    const importButton = document.getElementById('importButton');
 
     function createPianoRoll(container, notes) {
     container.innerHTML = '';
