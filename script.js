@@ -203,15 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const fileContent = e.target.result;
-                    const titleMarker = '---TITLE---';
-                    const contentMarker = '---CONTENT---';
-                    const titleStart = fileContent.indexOf(titleMarker) + titleMarker.length;
-                    const contentStart = fileContent.indexOf(contentMarker) + contentMarker.length;
-                    const title = fileContent.substring(titleStart, fileContent.indexOf(contentMarker)).trim();
-                    const content = fileContent.substring(contentStart).trim();
-                    document.getElementById('titleBox').value = title;
-                    notepad.value = content;
+                    notepad.value = e.target.result;
                 };
                 reader.readAsText(file);
             }
@@ -220,14 +212,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function saveFile() {
         const content = notepad.value;
-        const title = document.getElementById('titleBox').value.trim();
-        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
-        const fileContent = `---TITLE---\n${title}\n---CONTENT---\n${content}`;
-        const blob = new Blob([fileContent], { type: 'text/plain' });
+        const blob = new Blob([content], { type: 'text/plain' });
         const link = document.createElement('a');
+        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
         link.href = URL.createObjectURL(blob);
-        link.download = fileName;
+        link.download = `notes-${date}.txt`;
         link.click();
         URL.revokeObjectURL(link.href);
     }
