@@ -244,14 +244,11 @@
         </div>
     </div>
     <div class="notepad-container">
-        <div class="button-container">
-            <label for="titleBox">Songwriting Notepad</label>
-            <button onclick="importFile()">Import .txt</button>
-            <button onclick="saveFile()">Save .txt</button>
-        </div>
-        <input type="text" id="titleBox" placeholder="Enter song title">
+        <label for="notepad">Songwriting Notepad</label>
         <textarea id="notepad" placeholder="Write your lyrics or notes here..."></textarea>
         <input type="file" id="fileInput" style="display: none;">
+        <button onclick="importFile()">Import .txt</button>
+        <button onclick="saveFile()">Save .txt</button>
         <br>
         <br>
         <br>
