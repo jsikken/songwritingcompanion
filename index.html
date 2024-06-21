@@ -239,6 +239,21 @@
             <div id="rhymeResults" class="rhyme-words"></div><br><br>
         </div>
     </div>
+    <div class="notepad-container">
+        <div class="button-container">
+            <label for="titleBox">Songwriting Notepad</label>
+            <button onclick="importFile()">Import .txt</button>
+            <button onclick="saveFile()">Save .txt</button>
+        </div>
+        <input type="text" id="titleBox" placeholder="Enter song title">
+        <textarea id="notepad" placeholder="Write your lyrics or notes here..."></textarea>
+        <input type="file" id="fileInput" style="display: none;">
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <br>
     <br>
     <script src="script.js"></script>
 </body>
