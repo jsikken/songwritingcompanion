@@ -56,12 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const trackbar = document.getElementById('trackbar');
     const rhymeBox = document.getElementById('rhymeBox');
     const rhymeResults = document.getElementById('rhymeResults');
-    const fileInput = document.getElementById('fileInput');
     const thesaurusBox = document.getElementById('thesaurusBox');
     const thesaurusResults = document.getElementById('thesaurusResults');
     const scaleType = document.getElementById('scaleType');
+    const fileInput = document.getElementById('fileInput');
     const saveButton = document.getElementById('saveButton');
     const importButton = document.getElementById('importButton');
+    const notepad = document.getElementById('notepad');
 
     function createPianoRoll(container, notes) {
     container.innerHTML = '';
@@ -206,7 +207,21 @@ document.addEventListener('DOMContentLoaded', function() {
         saveTextFile(fileContent, fileName);
     });
 
- function importFile() {
+    function saveFile() {
+        const content = notepad.value;
+        const title = document.getElementById('titleBox').value.trim();
+        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
+        const fileContent = `---TITLE---\n${title}\n---CONTENT---\n${content}`;
+        const blob = new Blob([fileContent], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    function importFile() {
         fileInput.click();
         fileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -228,21 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function saveFile() {
-        const content = notepad.value;
-        const title = document.getElementById('titleBox').value.trim();
-        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
-        const fileContent = `---TITLE---\n${title}\n---CONTENT---\n${content}`;
-        const blob = new Blob([fileContent], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(link.href);
-    }
-
-    window.importFile = importFile;
-    window.saveFile = saveFile;
+    saveButton.addEventListener('click', saveFile);
+    importButton.addEventListener('click', importFile);
 });
-
