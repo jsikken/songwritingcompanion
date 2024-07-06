@@ -196,21 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchSynonyms(thesaurusBox.value);
     });
 
-    function saveTextFile(content, fileName) {
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-        
-        document.body.appendChild(link);
-        link.click();
-        
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    }
-
 
     saveButton.addEventListener('click', function() {
         const content = notepad.value;
@@ -221,24 +206,44 @@ document.addEventListener('DOMContentLoaded', function() {
         saveTextFile(fileContent, fileName);
     });
 
-    function importTextFile(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            
-            reader.onload = (event) => {
-                resolve(event.target.result);
-            };
-            
-            reader.onerror = (error) => {
-                reject(error);
-            };
-            
-            reader.readAsText(file);
-        });
-    }
-    importButton.addEventListener('click', function() {
-        fileInput.click();
-    });
+    // Function to save the content to a .txt file
+function saveTextAsFile() {
+    const textToSave = document.getElementById('notepad').value;
+    const textToSaveAsBlob = new Blob([textToSave], { type: "text/plain" });
+    const textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    const fileNameToSaveAs = document.getElementById('titleBox').value || "untitled";
+
+    const downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs + ".txt";
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+
+    downloadLink.click();
+}
+
+function destroyClickedElement(event) {
+    document.body.removeChild(event.target);
+}
+
+function loadFileAsText() {
+    const fileToLoad = document.getElementById("fileInput").files[0];
+
+    const fileReader = new FileReader();
+    fileReader.onload = function(fileLoadedEvent) {
+        const textFromFileLoaded = fileLoadedEvent.target.result;
+        document.getElementById("notepad").value = textFromFileLoaded;
+    };
+    fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
+document.getElementById('saveButton').addEventListener('click', saveTextAsFile);
+document.getElementById('importButton').addEventListener('click', function() {
+    document.getElementById('fileInput').click();
+});
+document.getElementById('fileInput').addEventListener('change', loadFileAsText);
 
 
     fileInput.addEventListener('change', async function(event) {
