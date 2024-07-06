@@ -206,62 +206,43 @@ document.addEventListener('DOMContentLoaded', function() {
         saveTextFile(fileContent, fileName);
     });
 
-    // Function to save the content to a .txt file
-function saveTextAsFile() {
-    const textToSave = document.getElementById('notepad').value;
-    const textToSaveAsBlob = new Blob([textToSave], { type: "text/plain" });
-    const textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
-    const fileNameToSaveAs = document.getElementById('titleBox').value || "untitled";
-
-    const downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs + ".txt";
-    downloadLink.innerHTML = "Download File";
-    downloadLink.href = textToSaveAsURL;
-    downloadLink.onclick = destroyClickedElement;
-    downloadLink.style.display = "none";
-    document.body.appendChild(downloadLink);
-
-    downloadLink.click();
-}
-
-function destroyClickedElement(event) {
-    document.body.removeChild(event.target);
-}
-
-function loadFileAsText() {
-    const fileToLoad = document.getElementById("fileInput").files[0];
-
-    const fileReader = new FileReader();
-    fileReader.onload = function(fileLoadedEvent) {
-        const textFromFileLoaded = fileLoadedEvent.target.result;
-        document.getElementById("notepad").value = textFromFileLoaded;
-    };
-    fileReader.readAsText(fileToLoad, "UTF-8");
-}
-
-document.getElementById('saveButton').addEventListener('click', saveTextAsFile);
-document.getElementById('importButton').addEventListener('click', function() {
-    document.getElementById('fileInput').click();
-});
-document.getElementById('fileInput').addEventListener('change', loadFileAsText);
-
-
-    fileInput.addEventListener('change', async function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            try {
-                const fileContent = await importTextFile(file);
-                const titleMarker = '---TITLE---';
-                const contentMarker = '---CONTENT---';
-                const titleStart = fileContent.indexOf(titleMarker) + titleMarker.length;
-                const contentStart = fileContent.indexOf(contentMarker) + contentMarker.length;
-                const title = fileContent.substring(titleStart, fileContent.indexOf(contentMarker)).trim();
-                const content = fileContent.substring(contentStart).trim();
-                document.getElementById('titleBox').value = title;
-                notepad.value = content;
-            } catch (error) {
-                console.error('Error importing file:', error);
+ function importFile() {
+        fileInput.click();
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileContent = e.target.result;
+                    const titleMarker = '---TITLE---';
+                    const contentMarker = '---CONTENT---';
+                    const titleStart = fileContent.indexOf(titleMarker) + titleMarker.length;
+                    const contentStart = fileContent.indexOf(contentMarker) + contentMarker.length;
+                    const title = fileContent.substring(titleStart, fileContent.indexOf(contentMarker)).trim();
+                    const content = fileContent.substring(contentStart).trim();
+                    document.getElementById('titleBox').value = title;
+                    notepad.value = content;
+                };
+                reader.readAsText(file);
             }
-        }
-    });
+        });
+    }
+
+    function saveFile() {
+        const content = notepad.value;
+        const title = document.getElementById('titleBox').value.trim();
+        const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const fileName = title ? `${title}-${date}.txt` : `notes-${date}.txt`;
+        const fileContent = `---TITLE---\n${title}\n---CONTENT---\n${content}`;
+        const blob = new Blob([fileContent], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    window.importFile = importFile;
+    window.saveFile = saveFile;
 });
+
